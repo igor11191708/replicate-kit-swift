@@ -8,7 +8,7 @@
 import Foundation
 
 /// Result data of running a model with Input data
-public struct Prediction<Input, Output>: Codable, Identifiable where Input: Codable, Output: Codable{
+public struct Prediction<Output>: Decodable, Identifiable where Output: Decodable{
     
     /// The unique ID of the prediction. Can be used to get a single prediction.
     public let id : String
@@ -27,9 +27,6 @@ public struct Prediction<Input, Output>: Codable, Identifiable where Input: Coda
     
     /// Metrics object with a **predict_time** property showing the amount of CPU or GPU time, in seconds, that this prediction used while running.
     public let metrics: Metrics?
-    
-    /// The model's input as a JSON object. The input depends on what model you are running. To see the available inputs, click the "Run with API" tab on the model you are running. For example, stability-ai/stable-diffusion takes prompt as an input.
-    public let input: Input
     
     /// Result of prediction
     /// Input and output (including any files) are automatically deleted after an hour, so you must save a copy of any files in the output if you'd like to continue using them.

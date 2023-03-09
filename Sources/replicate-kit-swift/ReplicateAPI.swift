@@ -83,15 +83,17 @@ public struct ReplicateAPI{
     ///   - input: Input data
     ///   - expect: Logic for creating a prediction Check out ``ReplicateAPI.Expect``
     /// - Returns: Predition result
-    public func createPrediction<Input: Codable, Output: Codable>(
+    public func createPrediction<Input: Encodable, Output: Decodable>(
         version id : String,
         input: Input,
         expect: Expect = .yes()
-    ) async throws -> Prediction<Input, Output>{
+    ) async throws -> Prediction<Output>{
         
-        typealias Result = Prediction<Input, Output>
+        typealias Result = Prediction<Output>
         
         let body = HttpBody(version: id, input: input)
+        
+        print(body)
         
         let prediction: Result = try await launchPrediction(with: body)
         
@@ -113,12 +115,12 @@ public struct ReplicateAPI{
     ///   - id: Prediction id
     ///   - strategy: Retry strategy
     /// - Returns: Prediction
-    private func retry<Input: Codable, Output: Codable>(
+    private func retry<Output: Decodable>(
         with id : String,
         retry strategy : RetryService.Strategy
-    ) async throws -> Prediction<Input, Output>{
+    ) async throws -> Prediction<Output>{
         
-        typealias Result = Prediction<Input, Output>
+        typealias Result = Prediction<Output>
         
         let policy = RetryService(strategy: strategy)
        
@@ -131,7 +133,7 @@ public struct ReplicateAPI{
             let status = prediction.status
             
             #if DEBUG
-            print(status)
+            print("Status : \(status)")
             #endif
             
             if status == .succeeded{
@@ -150,11 +152,11 @@ public struct ReplicateAPI{
     /// In the case of success, output will be an object containing the output of the model. Any files will be represented as URLs. You'll need to pass the Authorization header to request them.
     /// - Parameter id: Prediction id
     /// - Returns: Prediction
-    private func getPrediction<Input: Codable, Output: Codable>(
+    private func getPrediction<Output: Decodable>(
         by id : String
-    ) async throws -> Prediction<Input, Output>{
+    ) async throws -> Prediction<Output>{
             
-        let prediction : Http.Response<Prediction<Input, Output>> = try await client.get(
+        let prediction : Http.Response<Prediction<Output>> = try await client.get(
             path: "predictions/\(id)"
         )
         
@@ -164,11 +166,11 @@ public struct ReplicateAPI{
     /// Calling this operation starts a new prediction for the version and inputs you provide. As models can take several seconds or more to run, the output will not be available immediately. To get the final result of the prediction you should either provide a webhook URL for us to call when the results are ready, or poll the get a prediction endpoint until it has one of the terminated statuses.
     /// - Parameter body: Request body
     /// - Returns: Created prediction
-    private func launchPrediction<Input: Codable, Output: Codable>(
+    private func launchPrediction<Input: Encodable, Output: Decodable>(
         with body : HttpBody<Input>
-    ) async throws -> Prediction<Input, Output>{
+    ) async throws -> Prediction<Output>{
         
-        let prediction : Http.Response<Prediction<Input, Output>> = try await client.post(
+        let prediction : Http.Response<Prediction<Output>> = try await client.post(
             path: "predictions",
             body : body
         )

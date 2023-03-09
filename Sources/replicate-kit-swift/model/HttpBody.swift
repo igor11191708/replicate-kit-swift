@@ -11,7 +11,7 @@ import Foundation
 extension ReplicateAPI{
     
     /// Http request body
-    struct HttpBody<Input>: Encodable where Input : Codable{
+    struct HttpBody<Input>: Encodable where Input : Encodable{
         
         /// Model vertion
         let version : String
