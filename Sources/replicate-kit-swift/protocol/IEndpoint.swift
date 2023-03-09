@@ -11,6 +11,4 @@ public protocol IEndpoint{
     
     static var baseURL: String { get }
     
-    static var apiKey: String { get }
-    
 }

@@ -23,20 +23,34 @@ public struct ReplicateAPI{
     /// - Parameters:
     ///   - client: Custom client
     ///   - endpoint: Replicate endpoint
+    ///   - apiKey: Api key
     public init(
         client: ReplicateClient.Type,
-        endpoint : IEndpoint.Type
+        endpoint : IEndpoint.Type,
+        apiKey : String
     ) throws {
-        let cfg = try clientCfg(for: endpoint)
+        
+        guard let url = URL(string: endpoint.baseURL) else{
+            throw Errors.baseURLError
+        }
+        
+        let cfg = clientCfg(baseURL: url, apiKey: apiKey)
         self.client = client.init(config: cfg)
     }
     
     /// Init with endpoint
     /// - Parameter endpoint: Replicate endpoint
+    ///   - apiKey: Api key
     public init(
-        endpoint : IEndpoint.Type
+        endpoint : IEndpoint.Type,
+        apiKey : String
     ) throws {
-        let cfg = try clientCfg(for: endpoint)
+        
+        guard let url = URL(string: endpoint.baseURL) else{
+            throw Errors.baseURLError
+        }
+        
+        let cfg = clientCfg(baseURL: url, apiKey: apiKey)
         self.client = Http.Proxy.init(config: cfg)
     }
    
@@ -188,18 +202,6 @@ public struct ReplicateAPI{
 /// Client configuration type alias
 fileprivate typealias ClientConfig = Http.Configuration<JsonReader,JsonWriter>
 
-
-/// Client configuration
-/// - Parameter endpoint: Replicate endpoint
-fileprivate func clientCfg(for endpoint : IEndpoint.Type)
-    throws -> ClientConfig{
-        
-    guard let url = URL(string: endpoint.baseURL) else{
-        throw ReplicateAPI.Errors.baseURLError
-    }
-        
-    return clientCfg(baseURL: url, apiKey: endpoint.apiKey)
-}
 
 /// Client configuration
 /// - Parameter endpoint: Replicate endpoint
