@@ -93,7 +93,11 @@ public struct ReplicateAPI{
         
         let body = HttpBody(version: id, input: input)
         
-        print(body)
+        #if DEBUG
+        if let data = try? JSONEncoder().encode(body){
+            print(String(decoding: data, as: UTF8.self))
+        }
+        #endif
         
         let prediction: Result = try await launchPrediction(with: body)
         
