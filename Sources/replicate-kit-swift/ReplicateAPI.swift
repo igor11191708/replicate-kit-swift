@@ -1,0 +1,209 @@
+//
+//  ReplicateAPI.swift
+//  
+//
+//  Created by Igor on 08.03.2023.
+//
+
+import Foundation
+import async_http_client
+import retry_policy_service
+
+public struct ReplicateAPI{
+    
+    /// Replicate endpoint
+    public let endpoint : IEndpoint.Type
+
+    /// Client type alias
+    public typealias ReplicateClient = Http.Proxy<JsonReader,JsonWriter>
+    
+    /// Communication layer
+    private let client : ReplicateClient
+
+        
+    // MARK: - Life circle
+    
+    /// Init with custom client and endpoint
+    /// - Parameters:
+    ///   - client: Custom client
+    ///   - endpoint: Replicate endpoint
+    public init(
+        client: ReplicateClient.Type,
+        endpoint : IEndpoint.Type
+    ) throws {
+        let cfg = try clientCfg(for: endpoint)
+        self.client = client.init(config: cfg)
+        self.endpoint = endpoint
+    }
+    
+    /// Init with endpoint
+    /// - Parameter endpoint: Replicate endpoint
+    public init(
+        endpoint : IEndpoint.Type
+    ) throws {
+        let cfg = try clientCfg(for: endpoint)
+        self.client = Http.Proxy.init(config: cfg)
+        self.endpoint = endpoint
+    }
+    
+    // MARK: - API
+    
+    /// Get a collection of models
+    /// - Parameter collection_slug: The slug of the collection, like super-resolution or image-restoration
+    /// - Returns: a collection of models
+    public func getCollections(collection_slug : String) async throws -> CollectionOfModels{
+        
+        let path = "collections/\(collection_slug)"
+        let collection : Http.Response<CollectionOfModels> = try await client.get(path: path)
+        
+        return collection.value
+    }
+    
+    /// Get a model
+    /// - Parameters:
+    ///   - owner: Model owner
+    ///   - name: Model name
+    public func getModel(owner: String, name: String) async throws -> Model{
+        
+        let path = "models/\(owner)/\(name)"
+        let model : Http.Response<Model> = try await client.get(path: path)
+        
+        return model.value
+    }
+    
+    /// Create prediction
+    /// https://replicate.com/docs/reference/http#create-prediction
+    /// - Parameters:
+    ///   - versionId: Version id
+    ///   - input: Input data
+    ///   - expect: Logic for creating a prediction Check out ``ReplicateAPI.Expect``
+    /// - Returns: Predition result
+    public func createPrediction<Input: Codable, Output: Codable>(
+        version id : String,
+        input: Input,
+        expect: Expect = .yes()
+    ) async throws -> Prediction<Input, Output>{
+        
+        typealias Result = Prediction<Input, Output>
+        
+        let body = HttpBody(version: id, input: input)
+        
+        let prediction: Result = try await launchPrediction(with: body)
+        
+        guard case let .yes(strategy) = expect else { return prediction }
+    
+        let id = prediction.id
+        
+        do{
+           return try await retry(with: id, retry: strategy)
+        }catch{
+            return prediction
+        }
+    }
+
+    // MARK: - Private
+    
+    /// poll the get a prediction endpoint until it has one of the statuses
+    /// - Parameters:
+    ///   - id: Prediction id
+    ///   - strategy: Retry strategy
+    /// - Returns: Prediction
+    private func retry<Input: Codable, Output: Codable>(
+        with id : String,
+        retry strategy : RetryService.Strategy
+    ) async throws -> Prediction<Input, Output>{
+        
+        typealias Result = Prediction<Input, Output>
+        
+        let policy = RetryService(strategy: strategy)
+       
+        for delay in policy{ // until timeout or succeeded
+           
+            try await Task.sleep(nanoseconds: delay)
+            
+            let prediction: Result = try await getPrediction(by: id)
+
+            let status = prediction.status
+            
+            #if DEBUG
+            print(status)
+            #endif
+            
+            if status == .succeeded{
+                return prediction
+            } else if status.isTerminated{
+                throw ReplicateAPI.Errors.terminated
+            }
+        }
+        
+        // timeout
+        throw ReplicateAPI.Errors.timeout
+    }
+    
+    /// Returns the same response as the create a prediction operation
+    /// status will be one of ``Prediction.Status``
+    /// In the case of success, output will be an object containing the output of the model. Any files will be represented as URLs. You'll need to pass the Authorization header to request them.
+    /// - Parameter id: Prediction id
+    /// - Returns: Prediction
+    private func getPrediction<Input: Codable, Output: Codable>(
+        by id : String
+    ) async throws -> Prediction<Input, Output>{
+            
+        let prediction : Http.Response<Prediction<Input, Output>> = try await client.get(
+            path: "predictions/\(id)"
+        )
+        
+        return prediction.value
+    }
+    
+    /// Calling this operation starts a new prediction for the version and inputs you provide. As models can take several seconds or more to run, the output will not be available immediately. To get the final result of the prediction you should either provide a webhook URL for us to call when the results are ready, or poll the get a prediction endpoint until it has one of the terminated statuses.
+    /// - Parameter body: Request body
+    /// - Returns: Created prediction
+    private func launchPrediction<Input: Codable, Output: Codable>(
+        with body : HttpBody<Input>
+    ) async throws -> Prediction<Input, Output>{
+        
+        let prediction : Http.Response<Prediction<Input, Output>> = try await client.post(
+            path: "predictions",
+            body : body
+        )
+        
+        return prediction.value
+    }
+}
+
+// MARK: - File private -
+
+/// Client configuration type alias
+fileprivate typealias ClientConfig = Http.Configuration<JsonReader,JsonWriter>
+
+
+/// Client configuration
+/// - Parameter endpoint: Replicate endpoint
+fileprivate func clientCfg(for endpoint : IEndpoint.Type)
+    throws -> ClientConfig{
+        
+    guard let url = URL(string: endpoint.baseURL) else{
+        throw ReplicateAPI.Errors.baseURLError
+    }
+        
+    return .init(
+        baseURL: url,
+        sessionConfiguration: sessionCfg(endpoint.apiKey))
+}
+
+
+/// Get session configuration
+/// - Parameter token: Api token
+/// - Returns: URLSessionConfiguration
+fileprivate func sessionCfg (_ token : String) -> URLSessionConfiguration{
+    
+    let config = URLSessionConfiguration.default
+    
+    config.httpAdditionalHeaders = [
+        "Authorization": "Token \(token)",
+        "application/json" : "Accept"
+    ]
+    
+    return config
+}
