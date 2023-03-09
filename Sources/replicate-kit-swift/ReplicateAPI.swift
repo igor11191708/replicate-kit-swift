@@ -16,7 +16,6 @@ public struct ReplicateAPI{
     
     /// Communication layer
     private let client : ReplicateClient
-
         
     // MARK: - Life circle
     
