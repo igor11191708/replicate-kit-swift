@@ -11,9 +11,6 @@ import retry_policy_service
 
 public struct ReplicateAPI{
     
-    /// Replicate endpoint
-    public let endpoint : IEndpoint.Type
-
     /// Client type alias
     public typealias ReplicateClient = Http.Proxy<JsonReader,JsonWriter>
     
@@ -33,7 +30,6 @@ public struct ReplicateAPI{
     ) throws {
         let cfg = try clientCfg(for: endpoint)
         self.client = client.init(config: cfg)
-        self.endpoint = endpoint
     }
     
     /// Init with endpoint
@@ -43,7 +39,17 @@ public struct ReplicateAPI{
     ) throws {
         let cfg = try clientCfg(for: endpoint)
         self.client = Http.Proxy.init(config: cfg)
-        self.endpoint = endpoint
+    }
+   
+    /// - Parameters:
+    ///   - baseURL: Base url
+    ///   - apiKey: Api key
+    public init(
+        baseURL: URL,
+        apiKey : String
+    ) {
+        let cfg = clientCfg(baseURL: baseURL, apiKey: apiKey)
+        self.client = Http.Proxy.init(config: cfg)
     }
     
     // MARK: - API
@@ -187,11 +193,18 @@ fileprivate func clientCfg(for endpoint : IEndpoint.Type)
         throw ReplicateAPI.Errors.baseURLError
     }
         
-    return .init(
-        baseURL: url,
-        sessionConfiguration: sessionCfg(endpoint.apiKey))
+    return clientCfg(baseURL: url, apiKey: endpoint.apiKey)
 }
 
+/// Client configuration
+/// - Parameter endpoint: Replicate endpoint
+fileprivate func clientCfg(baseURL: URL, apiKey: String)
+    -> ClientConfig{
+        
+    return .init(
+        baseURL: baseURL,
+        sessionConfiguration: sessionCfg(apiKey))
+}
 
 /// Get session configuration
 /// - Parameter token: Api token

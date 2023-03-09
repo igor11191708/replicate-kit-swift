@@ -10,7 +10,7 @@ import Foundation
 extension ReplicateAPI{
     
     /// Set of replicate api errors
-    enum Errors : Error{
+    public enum Errors : Error{
                 
         /// Base url errror
         case baseURLError
