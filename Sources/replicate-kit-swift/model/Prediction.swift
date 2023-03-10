@@ -8,6 +8,7 @@
 import Foundation
 
 /// Result data of running a model with Input data
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct Prediction<Output>: Decodable, Identifiable where Output: Decodable{
     
     /// The unique ID of the prediction. Can be used to get a single prediction.

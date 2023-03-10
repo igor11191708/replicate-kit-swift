@@ -9,6 +9,8 @@ import Foundation
 import async_http_client
 import retry_policy_service
 
+/// HTTP API reference
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct ReplicateAPI{
     
     /// Client type alias
