@@ -99,7 +99,7 @@ public struct ReplicateAPI{
     ///   - input: Input data
     ///   - expect: Logic for creating a prediction Check out ``ReplicateAPI.Expect``
     ///  - webhook: An HTTPS URL for receiving a webhook when the prediction has new output.
-    /// - Returns: Predition result
+    /// - Returns: Prediction result
     public func createPrediction<Input: Encodable, Output: Decodable>(
         version id : String,
         input: Input,
