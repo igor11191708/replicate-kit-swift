@@ -111,12 +111,6 @@ public struct ReplicateAPI{
         
         let body = HttpBody(version: id, input: input, webhook: webhook)
         
-        #if DEBUG
-        if let data = try? JSONEncoder().encode(body){
-            print(String(decoding: data, as: UTF8.self))
-        }
-        #endif
-        
         let prediction: Result = try await launchPrediction(with: body)
         
         guard case let .yes(strategy) = expect else { return prediction }
