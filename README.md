@@ -50,6 +50,8 @@ Calling this operation starts a new prediction for the version and inputs you pr
 
 Each time a prediction generates an output (note that predictions can generate multiple outputs)
 
+![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_03.png) 
+
 ## Replicate API
 
 ```swift
@@ -90,4 +92,4 @@ Each time a prediction generates an output (note that predictions can generate m
 
 ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_02.png) 
 
-![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_03.png) 
+
