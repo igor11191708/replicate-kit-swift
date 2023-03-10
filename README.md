@@ -2,6 +2,8 @@
 
 Replicate is a service that lets you run machine learning models with a few lines of code, without needing to understand how machine learning works. This package is the swift layer between Replicate API and your application.
  
+  ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_01.png) 
+ 
  ## How to use
  
 ### Authentication
@@ -84,4 +86,6 @@ Each time a prediction generates an output (note that predictions can generate m
 - Go to Product > Build Documentation or **⌃⇧⌘ D**
 
 ## SwiftUI example for the package
-[Replicate toolkit for swift example](https://github.com/The-Igor/replicate-kit-example)
+**is comming check it out later**
+
+![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_02.png) 
