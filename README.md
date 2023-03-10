@@ -4,4 +4,4 @@ Replicate lets you run machine learning models with a few lines of code, without
  
 ## Authentication
 All API requests must be authenticated with a token. Include this header with all request
- Get your API key ![get your API key](https://replicate.com/) 
+ Get your API key [get your API key](https://replicate.com/) 
