@@ -96,16 +96,18 @@ public struct ReplicateAPI{
     ///   - versionId: Version id
     ///   - input: Input data
     ///   - expect: Logic for creating a prediction Check out ``ReplicateAPI.Expect``
+    ///  - webhook: An HTTPS URL for receiving a webhook when the prediction has new output.
     /// - Returns: Predition result
     public func createPrediction<Input: Encodable, Output: Decodable>(
         version id : String,
         input: Input,
-        expect: Expect = .yes()
+        expect: Expect = .yes(),
+        webhook: URL? = nil
     ) async throws -> Prediction<Output>{
         
         typealias Result = Prediction<Output>
         
-        let body = HttpBody(version: id, input: input)
+        let body = HttpBody(version: id, input: input, webhook: webhook)
         
         #if DEBUG
         if let data = try? JSONEncoder().encode(body){
@@ -201,7 +203,6 @@ public struct ReplicateAPI{
 
 /// Client configuration type alias
 fileprivate typealias ClientConfig = Http.Configuration<JsonReader,JsonWriter>
-
 
 /// Client configuration
 /// - Parameter endpoint: Replicate endpoint
