@@ -89,3 +89,5 @@ Each time a prediction generates an output (note that predictions can generate m
 **is comming check it out later**
 
 ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_02.png) 
+
+![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_03.png) 
