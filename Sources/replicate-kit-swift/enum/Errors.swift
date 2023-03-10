@@ -20,6 +20,5 @@ extension ReplicateAPI{
         
         /// Prediction was terminated Check out ``Prediction.Status``
         case terminated
-    }
-    
+    }    
 }
