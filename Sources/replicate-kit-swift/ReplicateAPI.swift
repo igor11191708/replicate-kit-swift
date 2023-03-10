@@ -55,7 +55,7 @@ public struct ReplicateAPI{
     }
    
     /// - Parameters:
-    ///   - baseURL: Base url
+    ///   - baseURL: Base url ``ReplicateAPI.Endpoint`` or currently "https://api.replicate.com/v1/"
     ///   - apiKey: Api key
     public init(
         baseURL: URL,
