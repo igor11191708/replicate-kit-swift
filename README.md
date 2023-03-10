@@ -12,7 +12,7 @@ All API requests must be authenticated with a token. Include this header with al
 
 ```swift
         let url = URL(string: ReplicateAPI.Endpoint.baseURL)!
-        let apiKey = "r8_L9CDDYDoAAyCrus0WhY22K7dAlx0rYE0t7Fjn"
+        let apiKey = "your API key"
         api = ReplicateAPI(baseURL: url, apiKey: apiKey)
 ```
 
@@ -88,7 +88,7 @@ Each time a prediction generates an output (note that predictions can generate m
 - Go to Product > Build Documentation or **⌃⇧⌘ D**
 
 ## SwiftUI example for the package
-**is comming check it out later**
+**I'll put it out as it is completely finished**
 
 ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_02.png) 
 
