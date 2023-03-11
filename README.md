@@ -99,7 +99,7 @@ Each time a prediction generates an output (note that predictions can generate m
 - Go to Product > Build Documentation or **⌃⇧⌘ D**
 
 ## SwiftUI example for the package
-**I'll put it out as it is finished**
+ [Replicate kit example](https://github.com/The-Igor/replicate-kit-example) 
 
 ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_02.png) 
 
