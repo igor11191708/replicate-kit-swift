@@ -57,7 +57,7 @@ Each time a prediction generates an output (note that predictions can generate m
 
 ### Handling Replicate service error
 
-![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/error.png) 
+![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/errors.png) 
 
 
 ## Replicate API
