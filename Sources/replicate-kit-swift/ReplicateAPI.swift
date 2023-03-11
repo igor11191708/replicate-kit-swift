@@ -192,12 +192,12 @@ public struct ReplicateAPI{
         with body : HttpBody<Input>
     ) async throws -> Prediction<Output>{
         
-        let prediction : Http.Response<Prediction<Output>> = try await client.post(
+        let result : Http.Response<Prediction<Output>> = try await client.post(
             path: "predictions",
             body : body
         )
         
-        return prediction.value
+        return try validate(result)
     }
 }
 
