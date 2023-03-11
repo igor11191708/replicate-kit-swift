@@ -12,10 +12,12 @@ public struct ResponseError: Hashable, CustomStringConvertible, LocalizedError, 
     
     public let detail: String
     
+    /// CustomStringConvertible
     public var description: String {
         return detail
     }
     
+    /// LocalizedError
     public var errorDescription: String? {
         return detail
     }
