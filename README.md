@@ -16,7 +16,7 @@ All API requests must be authenticated with a token. Include this header with al
  [Get your API key](https://replicate.com) 
 
 ```swift
-        let url = URL(string: ReplicateAPI.Endpoint.baseURL)!
+        let url = URL(string: ReplicateAPI.Endpoint.baseURL)
         let apiKey = "your API key"
         api = ReplicateAPI(baseURL: url, apiKey: apiKey)
 ```
