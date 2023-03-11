@@ -55,7 +55,7 @@ Calling this operation starts a new prediction for the version and inputs you pr
 
 Each time a prediction generates an output (note that predictions can generate multiple outputs)
 
-### Handling Replicate service error
+### Handling Replicate error
 
 ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/errors.png) 
 
