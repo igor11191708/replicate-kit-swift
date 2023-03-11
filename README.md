@@ -1,5 +1,7 @@
 # Replicate toolkit for swift
 
+**Disclaimer: It is not official toolkit for swift from Replicate I do it becouse I like this resource**
+
 Replicate is a service that lets you run machine learning models with a few lines of code, without needing to understand how machine learning works. This package is the swift layer between Replicate API and your application.
 
 **The work is still in progress...**
