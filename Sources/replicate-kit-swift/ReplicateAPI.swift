@@ -14,7 +14,7 @@ import retry_policy_service
 public struct ReplicateAPI{
     
     /// Client type alias
-    public typealias ReplicateClient = Http.Proxy<JsonReader,JsonWriter>
+    public typealias ReplicateClient = Http.Proxy<ReplicateAPI.JsonReader,JsonWriter>
     
     /// Communication layer
     private let client : ReplicateClient
@@ -204,17 +204,22 @@ public struct ReplicateAPI{
 // MARK: - File private -
 
 /// Client configuration type alias
-fileprivate typealias ClientConfig = Http.Configuration<JsonReader,JsonWriter>
+fileprivate typealias ClientConfig = Http.Configuration<ReplicateAPI.JsonReader,JsonWriter>
 
 /// Client configuration
 /// - Parameter endpoint: Replicate endpoint
 fileprivate func clientCfg(baseURL: URL, apiKey: String)
     -> ClientConfig{
         
-    return .init(
-        baseURL: baseURL,
-        sessionConfiguration: sessionCfg(apiKey))
+        let session = URLSession(configuration: sessionCfg(apiKey))
+        
+        return .init(
+            reader: ReplicateAPI.JsonReader(),
+            writer: JsonWriter(),
+            baseURL: baseURL,
+            session: session)
 }
+
 
 /// Get session configuration
 /// - Parameter token: Api token

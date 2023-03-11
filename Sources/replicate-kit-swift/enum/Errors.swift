@@ -24,5 +24,8 @@ extension ReplicateAPI{
         
         /// Invalid response
         case invalidResponse(URLResponse, String?)
+        
+        
+        case read(ResponseError)
     }    
 }
