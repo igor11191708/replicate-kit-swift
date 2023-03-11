@@ -55,7 +55,10 @@ Calling this operation starts a new prediction for the version and inputs you pr
 
 Each time a prediction generates an output (note that predictions can generate multiple outputs)
 
-![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_03.png) 
+### Handling Replicate service error
+
+![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/error.png) 
+
 
 ## Replicate API
 
@@ -87,6 +90,9 @@ Each time a prediction generates an output (note that predictions can generate m
     ) async throws -> Prediction<Output>
 
 ```
+
+![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_03.png) 
+
 
 ## Documentation(API)
 - You need to have Xcode 13 installed in order to have access to Documentation Compiler (DocC)
