@@ -30,6 +30,7 @@ All API requests must be authenticated with a token. Include this header with al
    let model = try await api.getModel(owner: item.owner, name: item.name)
 ```
 
+
 ### Create prediction and get result
 
 Calling this operation starts a new prediction for the version and inputs you provide. As models can take several seconds or more to run, the output will not be available immediately. To get the final result of the prediction you should either provide a webhook URL for us to call when the results are ready, or poll the get a prediction endpoint until it has one of the terminated statuses.
@@ -54,6 +55,7 @@ Calling this operation starts a new prediction for the version and inputs you pr
 ```
 
 Each time a prediction generates an output (note that predictions can generate multiple outputs)
+You can find input format for models at [the model page](https://replicate.com/stability-ai/stable-diffusion/api) for example
 
 ### Handling Replicate error
 
