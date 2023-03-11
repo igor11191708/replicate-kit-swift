@@ -11,7 +11,7 @@ extension ReplicateAPI{
     
     /// Set of replicate api errors
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public enum Errors : Error{
+    public enum Errors : Error, Hashable{
                 
         /// Base url errror
         case baseURLError
@@ -21,5 +21,8 @@ extension ReplicateAPI{
         
         /// Prediction was terminated Check out ``Prediction.Status``
         case terminated
+        
+        /// Invalid response
+        case invalidResponse(URLResponse, String?)
     }    
 }
