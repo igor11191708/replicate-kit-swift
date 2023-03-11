@@ -28,9 +28,13 @@ public struct ResponseError: Hashable, CustomStringConvertible, LocalizedError, 
 
     public init(from decoder: Decoder) throws {
         
-        if let container = try? decoder.container(keyedBy: CodingKeys.self) {
+        guard let container = try? decoder.container(keyedBy: CodingKeys.self) else {
+            throw ReplicateAPI.Errors.couldNotDecodeErrorContainer
+        }
+        
+        do{
             detail = try container.decode(String.self, forKey: .detail)
-        }else {
+        }catch{
             let ctx = DecodingError.Context(
                 codingPath: [CodingKeys.detail],
                 debugDescription: "could not to decode error response")
