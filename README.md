@@ -3,8 +3,6 @@
  
  **The work is still in progress...**
 
-*Disclaimer: It is not official toolkit for swift from Replicate I do it becouse I like this resource and I hope you'll get a lot new openings at least from knowing about [Replicate](https://replicate.com) through this package*
- 
   ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_01.png)  
 
 Replicate is a service that lets you run machine learning models with a few lines of code, without needing to understand how machine learning works. This package is the swift layer between Replicate API and your application.
@@ -106,3 +104,4 @@ You can find input format for models at [the model page](https://replicate.com/s
 ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_02.png) 
 
 
+*Disclaimer: It is not official toolkit for swift from Replicate I do it becouse I like this resource and I hope you'll get a lot new openings at least from knowing about [Replicate](https://replicate.com) through this package*
