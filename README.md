@@ -3,7 +3,7 @@
  
  **The work is still in progress...**
 
-*Disclaimer: It is not official toolkit for swift from Replicate I do it becouse I like this resource and I hope you'll get a lot new openings at least from knowing about [Replicate](https://replicate.com) through this package*
+*Disclaimer: It is not official toolkit for swift from Replicate I do it because I like the resource and I hope you'll get a lot new openings from knowing about the topic of AI models, generative deep learning etc through coming across this package*
 
 
   ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_01.png)  
