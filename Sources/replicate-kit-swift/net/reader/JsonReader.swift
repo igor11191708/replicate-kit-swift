@@ -27,8 +27,11 @@ extension ReplicateAPI{
             do{
                return try JSONDecoder().decode(T.self, from: data)
             }catch{
-                let error = try JSONDecoder().decode(ResponseError.self, from: data)
-                throw Errors.read(error)
+                if let error = try? JSONDecoder().decode(ResponseError.self, from: data){
+                    throw Errors.read(error)
+                }
+                
+                throw error
             }
         }
     }
