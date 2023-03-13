@@ -72,6 +72,7 @@ You can find input format for models at [the model page](https://replicate.com/s
     /// - Returns: a collection of models
     public func getCollections(collection_slug : String) async throws -> CollectionOfModels
 ```
+
 ```swift
     /// Get a model
     /// - Parameters:
@@ -102,8 +103,7 @@ You can find input format for models at [the model page](https://replicate.com/s
     /// Returns the same response as the create a prediction operation
     /// status will be one of ``Prediction.Status``
     /// In the case of success, output will be an object containing the output
-    /// of the model. Any files will be represented as URLs. You'll need to pass
-    /// the Authorization header to request them.
+    /// of the model. Any files will be represented as URLs.
     /// - Parameter id: Prediction id
     /// - Returns: Prediction
     public func getPrediction<Output: Decodable>(
