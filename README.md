@@ -13,7 +13,7 @@ Replicate is a service that lets you run machine learning models with a few line
  ## How to use
  
 ### Authentication
-All API requests must be authenticated with a token. Include this header with all request
+All API requests must be authenticated with a token.
  [Get your API key](https://replicate.com) 
 
 ```swift
