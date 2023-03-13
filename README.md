@@ -34,7 +34,7 @@ All API requests must be authenticated with a token.
 
 ### Create prediction and get result
 
-Calling this operation starts a new prediction for the version and inputs you provide. As models can take several seconds or more to run, the output will not be available immediately. To get the final result of the prediction you should either provide a webhook URL for us to call when the results are ready, or poll the get a prediction endpoint until it has one of the terminated statuses.
+Calling this operation starts a new prediction for the version and inputs you provide. As models can take several seconds or more to run, the output will not be available immediately. To get the final result of the prediction you should either provide a webhook URL to call when the results are ready, or wait a prediction result until it has one of the finished statuses.
 
 ```swift
 
