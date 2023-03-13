@@ -75,9 +75,10 @@ public struct ReplicateAPI{
     public func getCollections(collection_slug : String) async throws -> CollectionOfModels{
         
         let path = "collections/\(collection_slug)"
-        let result : Http.Response<CollectionOfModels> = try await client.get(path: path)
+        let rule = [Http.Validate.status(.range(200..<300))]
+        let result : Http.Response<CollectionOfModels> = try await client.get(path: path, validate: rule)
         
-        return try validate(result)
+        return result.value
     }
     
     /// Get a model
@@ -87,9 +88,10 @@ public struct ReplicateAPI{
     public func getModel(owner: String, name: String) async throws -> Model{
         
         let path = "models/\(owner)/\(name)"
-        let result : Http.Response<Model> = try await client.get(path: path)
+        let rule = [Http.Validate.status(.range(200..<300))]
+        let result : Http.Response<Model> = try await client.get(path: path, validate: rule)
         
-        return try validate(result)
+        return result.value
     }
     
     /// Create prediction
@@ -178,11 +180,13 @@ public struct ReplicateAPI{
         by id : String
     ) async throws -> Prediction<Output>{
             
+        let rule = [Http.Validate.status(.range(200..<300))]
         let result : Http.Response<Prediction<Output>> = try await client.get(
-            path: "predictions/\(id)"
+            path: "predictions/\(id)",
+            validate: rule
         )
                         
-        return try validate(result)
+        return result.value
     }
     
     /// Calling this operation starts a new prediction for the version and inputs you provide. As models can take several seconds or more to run, the output will not be available immediately. To get the final result of the prediction you should either provide a webhook URL for us to call when the results are ready, or poll the get a prediction endpoint until it has one of the terminated statuses.
@@ -192,12 +196,14 @@ public struct ReplicateAPI{
         with body : HttpBody<Input>
     ) async throws -> Prediction<Output>{
         
+        let rule = [Http.Validate.status(.range(200..<300))]
         let result : Http.Response<Prediction<Output>> = try await client.post(
             path: "predictions",
-            body : body
+            body : body,
+            validate: rule
         )
         
-        return try validate(result)
+        return result.value
     }
 }
 
@@ -235,25 +241,3 @@ fileprivate func sessionCfg (_ token : String) -> URLSessionConfiguration{
     
     return config
 }
-
-/// Validate response
-/// - Parameters:
-///   - response: URLResponse
-///   - data: Data
-/// - Throws: ReplicateAPI.Errors.invalidResponse
-/// - Returns: Data
-fileprivate func validate<T>(_ result: Http.Response<T>) throws -> T{
-    
-    guard let status = result.statusCode else{
-        let str = String(data: result.data, encoding: .utf8)
-        throw ReplicateAPI.Errors.invalidResponse(result.urlResponse, str)
-    }
-    
-    guard (200..<300).contains(status) else{
-        let str = String(data: result.data, encoding: .utf8)
-        throw ReplicateAPI.Errors.invalidResponse(result.urlResponse, str)
-    }
-    
-    return result.value
-}
-
