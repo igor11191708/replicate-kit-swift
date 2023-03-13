@@ -40,7 +40,8 @@ Calling this operation starts a new prediction for the version and inputs you pr
         throw Errors.latestVersionIsEmpty
     }
 
-    /// URL to the result 
+    /// In the case of success, output will be an object containing the 
+    ///  output of the model. Any files will be represented as URLs.
     let output: [String]? = try await api.createPrediction(
             version: latest.id,
             input: input.params /// ["prompt": "an astronaut riding a horse on mars"]
