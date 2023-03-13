@@ -131,6 +131,24 @@ public struct ReplicateAPI{
             return prediction
         }
     }
+    
+    /// Returns the same response as the create a prediction operation
+    /// status will be one of ``Prediction.Status``
+    /// In the case of success, output will be an object containing the output of the model. Any files will be represented as URLs. You'll need to pass the Authorization header to request them.
+    /// - Parameter id: Prediction id
+    /// - Returns: Prediction
+    public func getPrediction<Output: Decodable>(
+        by id : String
+    ) async throws -> Prediction<Output>{
+            
+        let rule = [Http.Validate.status(.range(200..<500))]
+        let result : Http.Response<Prediction<Output>> = try await client.get(
+            path: "predictions/\(id)",
+            validate: rule
+        )
+                        
+        return result.value
+    }
 
     // MARK: - Private
     
@@ -169,24 +187,6 @@ public struct ReplicateAPI{
         
         // timeout
         throw ReplicateAPI.Errors.timeout
-    }
-    
-    /// Returns the same response as the create a prediction operation
-    /// status will be one of ``Prediction.Status``
-    /// In the case of success, output will be an object containing the output of the model. Any files will be represented as URLs. You'll need to pass the Authorization header to request them.
-    /// - Parameter id: Prediction id
-    /// - Returns: Prediction
-    private func getPrediction<Output: Decodable>(
-        by id : String
-    ) async throws -> Prediction<Output>{
-            
-        let rule = [Http.Validate.status(.range(200..<500))]
-        let result : Http.Response<Prediction<Output>> = try await client.get(
-            path: "predictions/\(id)",
-            validate: rule
-        )
-                        
-        return result.value
     }
     
     /// Calling this operation starts a new prediction for the version and inputs you provide. As models can take several seconds or more to run, the output will not be available immediately. To get the final result of the prediction you should either provide a webhook URL for us to call when the results are ready, or poll the get a prediction endpoint until it has one of the terminated statuses.

@@ -72,6 +72,7 @@ You can find input format for models at [the model page](https://replicate.com/s
     public func getCollections(collection_slug : String) async throws -> CollectionOfModels
 ```
 ```swift
+    /// Get a model
     /// - Parameters:
     ///   - owner: Model owner
     ///   - name: Model name
@@ -79,6 +80,7 @@ You can find input format for models at [the model page](https://replicate.com/s
 ```    
 
 ```swift
+    /// Create prediction
     /// - Parameters:
     ///   - versionId: Version id
     ///   - input: Input data
@@ -92,6 +94,18 @@ You can find input format for models at [the model page](https://replicate.com/s
         webhook: URL? = nil
     ) async throws -> Prediction<Output>
 
+```
+
+```swift
+    /// Get prediction
+    /// Returns the same response as the create a prediction operation
+    /// status will be one of ``Prediction.Status``
+    /// In the case of success, output will be an object containing the output of the model. Any files will be represented as URLs. You'll need to pass the Authorization header to request them.
+    /// - Parameter id: Prediction id
+    /// - Returns: Prediction
+    public func getPrediction<Output: Decodable>(
+        by id : String
+    ) async throws -> Prediction<Output>
 ```
 
 ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_03.png) 
