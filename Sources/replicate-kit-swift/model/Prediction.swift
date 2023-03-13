@@ -34,7 +34,7 @@ public struct Prediction<Output>: Decodable, Identifiable where Output: Decodabl
     public let output: Output?
 }
 
-
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public extension Prediction{
     
     /// https://replicate.com/docs/reference/http#get-prediction
