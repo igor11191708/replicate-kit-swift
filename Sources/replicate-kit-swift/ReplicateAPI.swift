@@ -75,7 +75,7 @@ public struct ReplicateAPI{
     public func getCollections(collection_slug : String) async throws -> CollectionOfModels{
         
         let path = "collections/\(collection_slug)"
-        let rule = [Http.Validate.status(.range(200..<300))]
+        let rule = [Http.Validate.status(.range(200..<500))]
         let result : Http.Response<CollectionOfModels> = try await client.get(path: path, validate: rule)
         
         return result.value
@@ -88,7 +88,7 @@ public struct ReplicateAPI{
     public func getModel(owner: String, name: String) async throws -> Model{
         
         let path = "models/\(owner)/\(name)"
-        let rule = [Http.Validate.status(.range(200..<300))]
+        let rule = [Http.Validate.status(.range(200..<500))]
         let result : Http.Response<Model> = try await client.get(path: path, validate: rule)
         
         return result.value
@@ -180,7 +180,7 @@ public struct ReplicateAPI{
         by id : String
     ) async throws -> Prediction<Output>{
             
-        let rule = [Http.Validate.status(.range(200..<300))]
+        let rule = [Http.Validate.status(.range(200..<500))]
         let result : Http.Response<Prediction<Output>> = try await client.get(
             path: "predictions/\(id)",
             validate: rule
@@ -196,7 +196,7 @@ public struct ReplicateAPI{
         with body : HttpBody<Input>
     ) async throws -> Prediction<Output>{
         
-        let rule = [Http.Validate.status(.range(200..<300))]
+        let rule = [Http.Validate.status(.range(200..<500))]
         let result : Http.Response<Prediction<Output>> = try await client.post(
             path: "predictions",
             body : body,
