@@ -13,7 +13,7 @@ let package = Package(
             targets: ["replicate-kit-swift"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/The-Igor/async-http-client.git", from: "1.2.0")
+        .package(url: "https://github.com/The-Igor/async-http-client.git", .branchItem("main"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
