@@ -38,7 +38,7 @@ public struct ResponseError: Hashable, CustomStringConvertible, LocalizedError, 
         }catch{
             let ctx = DecodingError.Context(
                 codingPath: [CodingKeys.detail],
-                debugDescription: "could not to decode error response")
+                debugDescription: "Could not decode error response")
             
             throw DecodingError.dataCorrupted(ctx)
         }
