@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/The-Igor/async-http-client.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "bf04d0937c768173d4b96c5b8ff0d2be891d103d"
+        "revision" : "92f156c7c176dfb7be6be19eedc7349c454c9193",
+        "version" : "1.5.0"
       }
     },
     {
