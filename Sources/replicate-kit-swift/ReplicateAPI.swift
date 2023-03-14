@@ -75,7 +75,7 @@ public struct ReplicateAPI{
     public func getCollections(collection_slug : String) async throws -> CollectionOfModels{
         
         let path = "collections/\(collection_slug)"
-        let rule = [Http.Validate.status(.range(200..<299))]
+        
         do{
             return try await client.get(path: path, validate: rule).value
         }catch{
@@ -90,7 +90,7 @@ public struct ReplicateAPI{
     public func getModel(owner: String, name: String) async throws -> Model{
         
         let path = "models/\(owner)/\(name)"
-        let rule = [Http.Validate.status(.range(200..<299))]
+
         do{
             return try await client.get(path: path, validate: rule).value
         }catch{
@@ -145,9 +145,7 @@ public struct ReplicateAPI{
     public func getPrediction<Output: Decodable>(
         by id : String
     ) async throws -> Prediction<Output>{
-            
-        let rule = [Http.Validate.status(.range(200..<299))]
-        
+
         do{
             return try await client.get(
                 path: "predictions/\(id)",
@@ -204,8 +202,6 @@ public struct ReplicateAPI{
         with body : HttpBody<Input>
     ) async throws -> Prediction<Output>{
         
-        let rule = [Http.Validate.status(.range(200..<299))]
-        
         do{
             return try await client.post(
                 path: "predictions",
@@ -252,3 +248,6 @@ fileprivate func sessionCfg (_ token : String) -> URLSessionConfiguration{
     
     return config
 }
+
+/// Between the range responses from the server is valid
+fileprivate let rule = [Http.Validate.status(.range(200..<299))]
