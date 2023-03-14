@@ -14,7 +14,7 @@ import retry_policy_service
 public struct ReplicateAPI{
     
     /// Client type alias
-    public typealias ReplicateClient = Http.Proxy<ReplicateAPI.JsonReader,JsonWriter>
+    public typealias ReplicateClient = Http.Proxy<JsonReader,JsonWriter>
     
     /// Communication layer
     private let client : ReplicateClient
@@ -75,10 +75,13 @@ public struct ReplicateAPI{
     public func getCollections(collection_slug : String) async throws -> CollectionOfModels{
         
         let path = "collections/\(collection_slug)"
-        let rule = [Http.Validate.status(.range(200..<500))]
-        let result : Http.Response<CollectionOfModels> = try await client.get(path: path, validate: rule)
-        
-        return result.value
+        let rule = [Http.Validate.status(.range(200..<299))]
+        do{
+            let result : Http.Response<CollectionOfModels> = try await client.get(path: path, validate: rule)
+            return result.value
+        }catch{
+            throw ResponseError.check(error)
+        }
     }
     
     /// Get a model
@@ -88,10 +91,14 @@ public struct ReplicateAPI{
     public func getModel(owner: String, name: String) async throws -> Model{
         
         let path = "models/\(owner)/\(name)"
-        let rule = [Http.Validate.status(.range(200..<500))]
-        let result : Http.Response<Model> = try await client.get(path: path, validate: rule)
+        let rule = [Http.Validate.status(.range(200..<299))]
+        do{
+            let result : Http.Response<Model> = try await client.get(path: path, validate: rule)
+                return result.value
+        }catch{
+            throw ResponseError.check(error)
+        }
         
-        return result.value
     }
     
     /// Create prediction
@@ -141,13 +148,18 @@ public struct ReplicateAPI{
         by id : String
     ) async throws -> Prediction<Output>{
             
-        let rule = [Http.Validate.status(.range(200..<500))]
-        let result : Http.Response<Prediction<Output>> = try await client.get(
-            path: "predictions/\(id)",
-            validate: rule
-        )
-                        
-        return result.value
+        let rule = [Http.Validate.status(.range(200..<299))]
+        
+        do{
+            let result : Http.Response<Prediction<Output>> = try await client.get(
+                path: "predictions/\(id)",
+                validate: rule
+            )
+            
+            return result.value
+        }catch{
+            throw ResponseError.check(error)
+        }
     }
 
     // MARK: - Private
@@ -196,21 +208,26 @@ public struct ReplicateAPI{
         with body : HttpBody<Input>
     ) async throws -> Prediction<Output>{
         
-        let rule = [Http.Validate.status(.range(200..<500))]
-        let result : Http.Response<Prediction<Output>> = try await client.post(
-            path: "predictions",
-            body : body,
-            validate: rule
-        )
+        let rule = [Http.Validate.status(.range(200..<299))]
         
-        return result.value
+        do{
+            let result : Http.Response<Prediction<Output>> = try await client.post(
+                path: "predictions",
+                body : body,
+                validate: rule
+            )
+            
+            return result.value
+        }catch{
+            throw ResponseError.check(error)
+        }
     }
 }
 
 // MARK: - File private -
 
 /// Client configuration type alias
-fileprivate typealias ClientConfig = Http.Configuration<ReplicateAPI.JsonReader,JsonWriter>
+fileprivate typealias ClientConfig = Http.Configuration<JsonReader,JsonWriter>
 
 /// Client configuration
 /// - Parameter endpoint: Replicate endpoint
@@ -220,7 +237,7 @@ fileprivate func clientCfg(baseURL: URL, apiKey: String)
         let session = URLSession(configuration: sessionCfg(apiKey))
         
         return .init(
-            reader: ReplicateAPI.JsonReader(),
+            reader: JsonReader(),
             writer: JsonWriter(),
             baseURL: baseURL,
             session: session)
