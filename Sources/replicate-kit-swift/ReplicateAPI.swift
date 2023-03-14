@@ -77,8 +77,7 @@ public struct ReplicateAPI{
         let path = "collections/\(collection_slug)"
         let rule = [Http.Validate.status(.range(200..<299))]
         do{
-            let result : Http.Response<CollectionOfModels> = try await client.get(path: path, validate: rule)
-            return result.value
+            return try await client.get(path: path, validate: rule).value
         }catch{
             throw ResponseError.check(error)
         }
@@ -93,8 +92,7 @@ public struct ReplicateAPI{
         let path = "models/\(owner)/\(name)"
         let rule = [Http.Validate.status(.range(200..<299))]
         do{
-            let result : Http.Response<Model> = try await client.get(path: path, validate: rule)
-                return result.value
+            return try await client.get(path: path, validate: rule).value
         }catch{
             throw ResponseError.check(error)
         }
@@ -151,12 +149,10 @@ public struct ReplicateAPI{
         let rule = [Http.Validate.status(.range(200..<299))]
         
         do{
-            let result : Http.Response<Prediction<Output>> = try await client.get(
+            return try await client.get(
                 path: "predictions/\(id)",
                 validate: rule
-            )
-            
-            return result.value
+            ).value
         }catch{
             throw ResponseError.check(error)
         }
@@ -211,13 +207,11 @@ public struct ReplicateAPI{
         let rule = [Http.Validate.status(.range(200..<299))]
         
         do{
-            let result : Http.Response<Prediction<Output>> = try await client.post(
+            return try await client.post(
                 path: "predictions",
                 body : body,
                 validate: rule
-            )
-            
-            return result.value
+            ).value
         }catch{
             throw ResponseError.check(error)
         }
