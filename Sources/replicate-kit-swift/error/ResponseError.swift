@@ -45,6 +45,12 @@ public struct ResponseError: Hashable, CustomStringConvertible, LocalizedError, 
         }
     }
     
+    
+    /// Processing server cannot or will not process the request due to something that is perceived to be a client error
+    /// 401 Unauthorized
+    /// 402 Payment Required
+    /// - Parameter error: Error
+    /// - Returns: Error with a decription why server cannot or will not process the request  or Error
     static func check(_ error : Error) -> Error{
         
         guard case let Http.Errors.status(status, _, data) = error else{
@@ -66,5 +72,4 @@ public struct ResponseError: Hashable, CustomStringConvertible, LocalizedError, 
         return error
         
     }
-    
 }
