@@ -46,7 +46,7 @@ public struct ResponseError: Hashable, CustomStringConvertible, LocalizedError, 
     }
     
     
-    /// Processing server cannot or will not process the request due to something that is perceived to be a client error
+    /// Processing cases server cannot or will not process the request due to something that is perceived to be a client error
     /// 401 Unauthorized
     /// 402 Payment Required
     /// - Parameter error: Error

@@ -57,8 +57,8 @@ Calling this operation starts a new prediction for the version and inputs you pr
 Each time a prediction generates an output (note that predictions can generate multiple outputs)
 You can find input format for models at [the model page](https://replicate.com/stability-ai/stable-diffusion/api) for example
 
-### Handling Replicate error
-
+### Handling error
+Processing cases server cannot or will not process the request due to something that is perceived to be a client error
 ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/errors.png) 
 
 
