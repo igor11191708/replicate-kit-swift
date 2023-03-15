@@ -46,30 +46,30 @@ public struct ResponseError: Hashable, CustomStringConvertible, LocalizedError, 
     }
     
     
-    /// Processing cases server cannot or will not process the request due to something that is perceived to be a client error
-    /// 401 Unauthorized
-    /// 402 Payment Required
-    /// - Parameter error: Error
-    /// - Returns: Error with a decription why server cannot or will not process the request  or Error
-    static func check(_ error : Error) -> Error{
-        
-        guard case let Http.Errors.status(status, _, data) = error else{
-            return error
-        }
-        
-        guard let status, (400...499).contains(status) else{
-            return error
-        }
-        
-        guard let data = data else{
-            return error
-        }
-        
-        if let error = try? JSONDecoder().decode(ResponseError.self, from: data){
-            return ReplicateAPI.Errors.read(error)
-        }
-        
-        return error
-        
+
+}
+
+/// Processing cases server cannot or will not process the request due to something that is perceived to be a client error
+/// 401 Unauthorized
+/// 402 Payment Required
+/// - Parameter error: Error
+/// - Returns: Error with a decription why server cannot or will not process the request if it managed to parse data response, standard status error or nil if requst was succesful
+internal func errorFn(status: Int,  _ response : URLResponse, data: Data?) -> Error?{
+    
+    if (200...299).contains(status) { return nil }
+    
+    guard (400...499).contains(status) else{
+        return Http.Errors.status(status, response, data)
     }
+    
+    guard let data = data else{
+        return Http.Errors.status(status, response, data)
+    }
+    
+    if let error = try? JSONDecoder().decode(ResponseError.self, from: data){
+        return error
+    }
+    
+    return Http.Errors.status(status, response, data)
+    
 }

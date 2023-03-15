@@ -27,8 +27,5 @@ extension ReplicateAPI{
         
         /// Could not decode error format response
         case couldNotDecodeErrorContainer
-        
-        /// Could not decode error description
-        case read(ResponseError)
     }    
 }

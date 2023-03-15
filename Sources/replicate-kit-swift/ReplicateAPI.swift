@@ -76,11 +76,7 @@ public struct ReplicateAPI{
         
         let path = "collections/\(collection_slug)"
         
-        do{
-            return try await client.get(path: path, validate: rule).value
-        }catch{
-            throw ResponseError.check(error)
-        }
+        return try await client.get(path: path, validate: rule).value
     }
     
     /// Get a model
@@ -91,11 +87,7 @@ public struct ReplicateAPI{
         
         let path = "models/\(owner)/\(name)"
 
-        do{
-            return try await client.get(path: path, validate: rule).value
-        }catch{
-            throw ResponseError.check(error)
-        }
+        return try await client.get(path: path, validate: rule).value
         
     }
     
@@ -146,14 +138,7 @@ public struct ReplicateAPI{
         by id : String
     ) async throws -> Prediction<Output>{
 
-        do{
-            return try await client.get(
-                path: "predictions/\(id)",
-                validate: rule
-            ).value
-        }catch{
-            throw ResponseError.check(error)
-        }
+        try await client.get(path: "predictions/\(id)", validate: rule).value
     }
 
     // MARK: - Private
@@ -202,15 +187,11 @@ public struct ReplicateAPI{
         with body : HttpBody<Input>
     ) async throws -> Prediction<Output>{
         
-        do{
-            return try await client.post(
-                path: "predictions",
-                body : body,
-                validate: rule
-            ).value
-        }catch{
-            throw ResponseError.check(error)
-        }
+        try await client.post(
+            path: "predictions",
+            body : body,
+            validate: rule
+        ).value
     }
 }
 
@@ -250,4 +231,4 @@ fileprivate func sessionCfg (_ token : String) -> URLSessionConfiguration{
 }
 
 /// Between the range responses from the server is valid
-fileprivate let rule = [Http.Validate.status(.range(200..<299))]
+fileprivate let rule = [Http.Validate.status(.check(errorFn))]
