@@ -85,7 +85,7 @@ Processing a response errors cases when server cannot or will not process the re
     /// - Parameters:
     ///   - versionId: Version id
     ///   - input: Input data
-    ///   - expect: Logic for awaiting a prediction Check out ``ReplicateAPI.Expect``
+    ///   - expect: Logic for awaiting a prediction check out ``ReplicateAPI.Expect``
     ///  - webhook: An HTTPS URL for receiving a webhook when the prediction has new output.
     /// - Returns: Prediction result
     public func createPrediction<Input: Encodable, Output: Decodable>(
