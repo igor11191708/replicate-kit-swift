@@ -1,7 +1,7 @@
 # Replicate toolkit for swift
  [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FThe-Igor%2Freplicate-kit-swift%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/The-Igor/replicate-kit-swift) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FThe-Igor%2Freplicate-kit-swift%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/The-Igor/replicate-kit-swift)
  
-*Disclaimer: It is not official toolkit for swift from Replicate I do it because I'd like to support guys creating open source models for replicate and I hope you'll get a lot new openings from knowing about the topic of AI models, generative deep learning etc through coming across this package and replicate*
+*It is not official toolkit for swift from Replicate I do it because I'd like to support guys creating open source models for replicate and I hope you'll get a lot new openings from knowing about the topic of AI models, generative deep learning etc through coming across this package and replicate*
 
 
   ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_01.png)  
