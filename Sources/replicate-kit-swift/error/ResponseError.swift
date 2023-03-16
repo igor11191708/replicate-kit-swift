@@ -54,21 +54,25 @@ public struct ResponseError: Hashable, CustomStringConvertible, LocalizedError, 
 ///   - response: URLResponse
 ///   - data: Received data
 /// - Returns: Error with a description why server cannot or will not process the request if it managed to parse data response, standard status error or nil if request was successful
-internal let errorFn : Http.Validate.Status.ErrorFn = { status, response, data -> Error? in
+internal let errorFn : Http.Validate.Status.ErrorFn = {
+    status, response, data -> Error? in
+    
+    /// Default error response if not valid status code and we can't decode error format response
+    let error = Http.Errors.status(status, response, data)
     
     if (200...299).contains(status) { return nil }
     
     guard (400...499).contains(status) else{
-        return Http.Errors.status(status, response, data)
+        return error
     }
     
     guard let data = data else{
-        return Http.Errors.status(status, response, data)
+        return error
     }
     
     if let error = try? JSONDecoder().decode(ResponseError.self, from: data){
         return error
     }
     
-    return Http.Errors.status(status, response, data)
+    return error
 }
