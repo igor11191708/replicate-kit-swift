@@ -70,9 +70,7 @@ internal let errorFn : Http.Validate.Status.ErrorFn = {
         return error
     }
     
-    if let error = try? JSONDecoder().decode(ResponseError.self, from: data){
-        return error
-    }
+    if let error = try? JSONDecoder().decode(ResponseError.self, from: data){ return error }
     
     return error
 }
