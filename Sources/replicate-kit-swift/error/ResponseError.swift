@@ -57,7 +57,7 @@ public struct ResponseError: Hashable, CustomStringConvertible, LocalizedError, 
 internal let errorFn : Http.Validate.Status.ErrorFn = {
     status, response, data -> Error? in
     
-    /// Default error response if not valid status code and we can't decode error format response
+    /// Default error response if it's not valid status code and we can't decode error format response
     let error = Http.Errors.status(status, response, data)
     
     if (200...299).contains(status) { return nil }
