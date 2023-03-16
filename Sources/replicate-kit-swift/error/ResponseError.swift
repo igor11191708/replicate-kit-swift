@@ -54,7 +54,7 @@ public struct ResponseError: Hashable, CustomStringConvertible, LocalizedError, 
 ///   - response: URLResponse
 ///   - data: Received data
 /// - Returns: Error with a description why server cannot or will not process the request if it managed to parse data response, standard status error or nil if request was successful
-internal func errorFn(status: Int,  _ response : URLResponse, data: Data?) -> Error?{
+internal let errorFn : Http.Validate.Status.ErrorFn = { status, response, data -> Error? in
     
     if (200...299).contains(status) { return nil }
     
@@ -70,5 +70,5 @@ internal func errorFn(status: Int,  _ response : URLResponse, data: Data?) -> Er
         return error
     }
     
-    return Http.Errors.status(status, response, data)    
+    return Http.Errors.status(status, response, data)
 }
