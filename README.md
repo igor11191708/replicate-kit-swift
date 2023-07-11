@@ -3,6 +3,9 @@
  
 *It is not official toolkit for swift from Replicate I do it because I'd like to support guys creating open source models for replicate*
 
+## SwiftUI example for the package
+ [Replicate kit example app](https://github.com/The-Igor/replicate-kit-example) 
+
   ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_01.png)  
 
 Replicate is a service that lets you run machine learning models with a few lines of code, without needing to understand how machine learning works. This package is the swift layer between Replicate API and your application.
@@ -116,7 +119,5 @@ Processing a response errors cases when server cannot or will not process the re
 - You need to have Xcode 13 installed in order to have access to Documentation Compiler (DocC)
 - Go to Product > Build Documentation or **⌃⇧⌘ D**
 
-## SwiftUI example for the package
- [Replicate kit example](https://github.com/The-Igor/replicate-kit-example) 
 
 ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_02.png) 
