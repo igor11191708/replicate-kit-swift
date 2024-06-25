@@ -13,7 +13,7 @@ extension ReplicateAPI{
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     public enum Errors : Error, Hashable{
                 
-        /// Base url errror
+        /// Base url error
         case baseURLError
         
         /// Timeout retry policy
