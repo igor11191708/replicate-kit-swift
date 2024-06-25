@@ -223,7 +223,7 @@ fileprivate func sessionCfg (_ token : String) -> URLSessionConfiguration{
     let config = URLSessionConfiguration.default
     
     config.httpAdditionalHeaders = [
-        "Authorization": "Token \(token)",
+        "Authorization": "Bearer \(token)",
         "application/json" : "Accept"
     ]
     
