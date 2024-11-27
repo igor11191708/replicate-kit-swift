@@ -1,18 +1,18 @@
 //
 //  Errors.swift
-//  
+//
 //
 //  Created by Igor on 08.03.2023.
 //
 
 import Foundation
 
-extension ReplicateAPI{
+extension ReplicateAPI {
     
     /// Set of replicate API errors
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     public enum Errors: Error, Hashable, LocalizedError {
-                    
+        
         /// Base URL error
         case baseURLError
         
@@ -30,6 +30,9 @@ extension ReplicateAPI{
         
         /// Could not decode error format response
         case couldNotDecodeErrorContainer
+
+        /// Client-specific error with a custom message
+        case clientError(String)
 
         /// Provides a localized description for each error case.
         public var errorDescription: String? {
@@ -51,6 +54,9 @@ extension ReplicateAPI{
                 
             case .couldNotDecodeErrorContainer:
                 return NSLocalizedString("Could not decode the error response. The format might be incorrect.", comment: "Decoding error")
+                
+            case .clientError(let message):
+                return message
             }
         }
     }
