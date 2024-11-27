@@ -4,7 +4,7 @@
 *It is not official toolkit for swift from Replicate I do it because I'd like to support guys who are creating open-source models for Replicate*
 
 ## SwiftUI example for the package
- [Replicate kit example app](https://github.com/The-Igor/replicate-kit-example) 
+ [Replicate kit example app](https://github.com/igor11191708/replicate-kit-example) 
 
   ![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_01.png)  
 
@@ -61,7 +61,7 @@ You can find input format for models at [the model page](https://replicate.com/s
 
 ### Handling errors
 Processing a response errors cases when server cannot or will not process the request due to something that is perceived to be a client error
-![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/errors.png) 
+![The concept](https://github.com/igor11191708/replicate-kit-swift/blob/main/img/errors.png) 
 
 
 ## Replicate API
@@ -112,7 +112,7 @@ Processing a response errors cases when server cannot or will not process the re
     ) async throws -> Prediction<Output>
 ```
 
-![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_03.png) 
+![The concept](https://github.com/igor11191708/replicate-kit-swift/blob/main/img/image_03.png) 
 
 
 ## Documentation(API)
@@ -120,4 +120,4 @@ Processing a response errors cases when server cannot or will not process the re
 - Go to Product > Build Documentation or **⌃⇧⌘ D**
 
 
-![The concept](https://github.com/The-Igor/replicate-kit-swift/blob/main/img/image_02.png) 
+![The concept](https://github.com/igor11191708/replicate-kit-swift/blob/main/img/image_02.png) 
