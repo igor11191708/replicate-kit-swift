@@ -22,6 +22,9 @@ extension ReplicateAPI{
         /// Prediction was terminated Check out ``Prediction.Status``
         case terminated
         
+        /// Response error
+        case responseError(ResponseError)
+        
         /// Invalid response
         case invalidResponse(URLResponse, String?)
         
