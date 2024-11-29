@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftuiux/async-http-client.git",
       "state" : {
-        "revision" : "94d2573c14bb6b88110338a0f4f4cd7b0c6f3165",
-        "version" : "1.4.7"
+        "revision" : "936a6e953d3c3e05a14c3d852fea9955e57c9854",
+        "version" : "1.5.0"
       }
     },
     {
