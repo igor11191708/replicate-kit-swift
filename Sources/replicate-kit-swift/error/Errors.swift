@@ -11,7 +11,7 @@ extension ReplicateAPI {
     
     /// Set of replicate API errors
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
-    public enum Errors: Error, Hashable, LocalizedError {
+    public enum Errors: Error, LocalizedError {
         
         /// Base URL error
         case baseURLError
@@ -32,7 +32,7 @@ extension ReplicateAPI {
         case couldNotDecodeErrorContainer
 
         /// Client-specific error with a custom message
-        case clientError(String)
+        case clientError(LocalizedError)
 
         /// Provides a localized description for each error case.
         public var errorDescription: String? {
@@ -55,9 +55,29 @@ extension ReplicateAPI {
             case .couldNotDecodeErrorContainer:
                 return NSLocalizedString("Could not decode the error response. The format might be incorrect.", comment: "Decoding error")
                 
-            case .clientError(let message):
-                return message
+            case .clientError(let error):
+                return error.localizedDescription
             }
+        }
+    }
+}
+
+extension ReplicateAPI.Errors: Equatable {
+    public static func == (lhs: ReplicateAPI.Errors, rhs: ReplicateAPI.Errors) -> Bool {
+        switch (lhs, rhs) {
+        case (.baseURLError, .baseURLError),
+             (.timeout, .timeout),
+             (.terminated, .terminated),
+             (.couldNotDecodeErrorContainer, .couldNotDecodeErrorContainer):
+            return true
+        case (.responseError(let lhsError), .responseError(let rhsError)):
+            return lhsError == rhsError
+        case (.invalidResponse(let lhsResponse, let lhsMessage), .invalidResponse(let rhsResponse, let rhsMessage)):
+            return lhsResponse == rhsResponse && lhsMessage == rhsMessage
+        case (.clientError(let lhsError), .clientError(let rhsError)):
+            return lhsError.localizedDescription == rhsError.localizedDescription
+        default:
+            return false
         }
     }
 }
